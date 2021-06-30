@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Monster Slayer</h1>
+    </header>
+    <div id="game">
+      <section id="icons" class="container">
+        <div class="iconbar">
+          <div class="player">
+            <img src="/images/knight.png" alt="" />
+          </div>
+          <div class="heal" :class="{healActive : healUsed}">
+            <img src="/images/heal.png" alt="" />
+          </div>
+          <div class="sword" :class="{moveSwordRight : moveSwordRight}">
+            <img src="/images/sword.png" alt="" />
+          </div>
+          <div class="flame" :class="{moveFlameRight : moveFlameRight}">
+            <img src="/images/flame.png" alt="" />
+          </div>
+          <div class="claw" :class="{moveClawLeft : moveClawLeft}">
+            <img src="/images/griffe.png" alt="" />
+          </div>
+          <div class="monster">
+            <img src="/images/monster.png" alt="" />
+          </div>
+        </div>
+      </section>
+
+      <section id="monster" class="container">
+        <h2>Monster Health</h2>
+        <div class="healthbar">
+          <div
+            class="healthbar__value monsterbar"
+            :style="monsterBarStyles"
+          ></div>
+        </div>
+      </section>
+      <section id="player" class="container">
+        <h2>Your Health</h2>
+        <div class="healthbar">
+          <div class="healthbar__value" :style="playerBarStyles"></div>
+        </div>
+      </section>
+      <section id="controls">
+        <button :disabled="gcd" @click="attackMonster">ATTACK</button>
+
+        <button :disabled="mayUseSpecialAttack" @click="specialAttackMonster">
+          SPECIAL ATTACK
+        </button>
+        <button :disabled="gcd" @click="healPlayer">HEAL</button>
+        <button>SURRENDER</button>
+      </section>
+
+      <section id="log" class="container">
+        <h2>Battle Log</h2>
+        <p>Beat the monster in less than 10 rounds !</p>
+        <h3>Remaining rounds : {{ remainingRounds }}</h3>
+        <ul></ul>
+      </section>
+    </div>
+  </body>
+</html>
