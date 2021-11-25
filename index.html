@@ -12,6 +12,7 @@
     <script src="https://unpkg.com/vue@next" defer></script>
     <script src="app.js" defer></script>
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   </head>
   <body>
     <header>
@@ -54,24 +55,38 @@
         <h2>Your Health</h2>
         <div class="healthbar">
           <div class="healthbar__value" :style="playerBarStyles"></div>
+       
+        </div>
+        <h2>Your Mana</h2>
+        <div class="manabar">
+          <div class="manabar__value" :style="playerManaBarStyles"></div>
+          {{playerMana}} / 100
         </div>
       </section>
-      <section id="controls">
-        <button :disabled="gcd" @click="attackMonster">ATTACK</button>
+      <section class="container" v-if="winner">
+          <h2>Game over ! </h2>
+          <h3 v-if="winner === 'monster' ">You lost !</h3>
+          <h3 v-else-if="winner === 'player' ">You won !</h3>
+          <h3 v-else>It's a draw !</h3>
+          <button @click="startGame">Start new game</button>
+      </section>
+      <section id="controls" v-if="!winner">
+        <button  @click="attackMonster">ATTACK</button>
 
-        <button :disabled="mayUseSpecialAttack" @click="specialAttackMonster">
-          SPECIAL ATTACK
+        <button :disabled="!mayUseSpecialAttack" @click="specialAttackMonster">
+          SPECIAL ATTACK  <span>60 <i class="fas fa-tint"> </i></span>
         </button>
-        <button :disabled="gcd" @click="healPlayer">HEAL</button>
-        <button>SURRENDER</button>
+        <button :disabled="!mayUseHeal" @click="healPlayer">HEAL <span>40 <i class="fas fa-tint"> </i></span></button>
+        <button @click="surrenderGame">SURRENDER</button>
       </section>
 
       <section id="log" class="container">
         <h2>Battle Log</h2>
-        <p>Beat the monster in less than 10 rounds !</p>
-        <h3>Remaining rounds : {{ remainingRounds }}</h3>
+
         <ul></ul>
       </section>
+      <section id="instructions" class="container ">        <h2>Beat the monster in less than {{startRemainingRounds}} rounds !</h2>
+        <h3>Remaining rounds : {{ remainingRounds }}</h3></section>
     </div>
   </body>
 </html>
